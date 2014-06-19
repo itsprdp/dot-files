@@ -1,0 +1,16 @@
+"" Initial Setup
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+"" Set the font style and the size
+set guifont=Menlo\ Regular:h15
+
+""open a NERDTree automatically when vim starts up if no files were specified
+autocmd vimenter * if !argc() | NERDTree | endif
+
+"" NERDTree Shortcut tabs toggle shortcut
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+""close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
