@@ -6,35 +6,45 @@
 " needs. Think of a vimrc as a garden that needs to be maintained and fostered
 " throughout years. Keep it clean and useful - Fatih Arslan
 call plug#begin()
-Plug 'fatih/vim-go'
-Plug 'fatih/molokai'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'Blackrush/vim-gocode'
+Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-css-color'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'burnettk/vim-angular'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'derekwyatt/vim-scala'
+Plug 'easymotion/vim-easymotion'
+Plug 'ervandew/supertab'
+Plug 'fatih/molokai'
+Plug 'fatih/vim-go'
 Plug 'garyburd/go-explorer'
-Plug 'mileszs/ack.vim'
-Plug 'wincent/command-t'
-Plug 'tomtom/vimscriptuploader.rb'
 Plug 'google/vroom'
+Plug 'majutsushi/tagbar'
+"Plug 'matze/vim-move'
+Plug 'mileszs/ack.vim'
+Plug 'pangloss/vim-javascript'
 Plug 'raimondi/delimitmate'
 Plug 'scrooloose/nerdcommenter'
-Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
-Plug 'vim-airline/vim-airline'
-Plug 'ap/vim-css-color'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tomtom/vimscriptuploader.rb'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'Blackrush/vim-gocode'
-Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-markdown'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-rails'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'majutsushi/tagbar'
-Plug 'airblade/vim-gitgutter'
-Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/upAndDown'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-ruby/vim-ruby'
+Plug 'wincent/command-t'
+Plug 'danro/rename.vim'
+Plug 'herrbischoff/cobalt2.vim'
+Plug 'mxw/vim-jsx'
+Plug 'Yggdroot/indentLine'
 
 if has("gui_running")
   Plug 'SirVer/ultisnips'
@@ -95,15 +105,16 @@ endif
 syntax enable
 set t_Co=256
 let g:rehash256 = 1
-let g:molokai_original = 1
-colorscheme molokai
+" let g:molokai_original = 1
+"colorscheme molokai
+colorscheme cobalt2
 
 """"""""""""""""""""""
 "      Mappings      "
 """"""""""""""""""""""
 
 " Set leader shortcut to a comma ','. By default it's the backslash
-let mapleader = ","
+""let mapleader = ","
 
 " Jump to next error with Ctrl-n and previous error with Ctrl-m. Close the
 " quickfix window with <leader>a
@@ -203,7 +214,8 @@ endfunction
 """ OLD Configs and or Custom settings
 
 """ Set the font style and the size
-set guifont=Menlo\ Regular:h15
+"set guifont=Menlo\ Regular:h15
+set guifont=Operator\ Mono:h15
 
 """ Remove the left scrollbar
 set go-=L
@@ -284,3 +296,29 @@ autocmd BufWritePre * :%s/\s\+$//e
 " copy to clipboard
 vmap <C-c> "+y
 
+" dependency tpope/unimpaired
+" ^U moves lines up, ^D moves lines down.
+" Works in normal or visual select modes.
+nmap <C-u> [e
+nmap <C-d> ]e
+vmap <C-u> [egv
+vmap <C-d> ]egv
+
+" Find: cmd + shift + F
+nmap <D-F> :Ack<space>
+
+
+" use eslint
+let g:syntastic_javascript_checkers = ['eslint']
+
+"Here is a very useful function I've found somewhere
+" (a long time ago, probably on the Vim Wiki) that gives you
+" the syntax group of the word/symbol under your cursor:
+" Just place your cursor on the item you want to inspect and
+" type :call SynStack() to echo the syntax group in the command-line.
+function! SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
